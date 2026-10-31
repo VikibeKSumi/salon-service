@@ -1,1 +1,3 @@
-# salon-service
+# Salon-Service
+
+**Fullstack AI Application**
