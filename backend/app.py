@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
-import requests
 
+from routes.telegram_route import telegram_router
 
 app = FastAPI(title="Salon Service")
+app.include_router(telegram_router)
 
 class ChatRequest(BaseModel):
     query: str = Field()
@@ -14,16 +15,5 @@ def home():
 
     return {
         "Status": "Running"
-    }
-
-
-@app.post("/chat")
-def chat(request: ChatRequest):
-
-    requests.post()
-    response = "response" #llm.invoke(input=request.query)
-    return {
-        "query": request.query,
-        "response": response
     }
 
