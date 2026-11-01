@@ -1,3 +1,5 @@
 
-telegram_api_url: ""
-my_webhook_url: ""
+telegram:
+  tg_url: "https://api.telegram.org/bot"
+  tg_webhook_url: "https://hits-precisely-highlight-macro.trycloudflare.com/telegram"
+  
