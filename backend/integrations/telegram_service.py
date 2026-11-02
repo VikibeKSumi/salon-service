@@ -20,7 +20,7 @@ class TelegramService():
                     },
                 timeout=10
                 )
-                r.raise_for_status()
+                r.raise_for_status()  # 4xx/5xx don't raise by default; make them raise so except retries
                 return
             except requests.RequestException as e:
                 print(f"tg_send attempts {attempt+1} failed: {e}")
@@ -36,11 +36,11 @@ class TelegramService():
         if not msg:
             return
         
-        user_id = msg["from"]["id"]
+        user_id = msg["from"]["id"] 
         chat_id = msg["chat"]["id"]
         
         if "text" not in msg:
-            self.tg_send(chat_id, reply_text="I can only read text messages")
+            self.tg_send(chat_id, reply_text="I can only read text messages") # non text message handling
             return
         text = msg["text"]
         
