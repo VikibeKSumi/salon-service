@@ -33,7 +33,10 @@ CREATE TABLE IF NOT EXISTS bookings (
     end_time TIMESTAMPTZ NOT NULL,
     status TEXT NOT NULL DEFAULT 'booked' CHECK (status IN ('booked', 'cancelled', 'done')),
     reminder_sent_at TIMESTAMPTZ,
-    created_at TIMESTAMPTZ DEFAULT now()
+    created_at TIMESTAMPTZ DEFAULT now(),
+    -- no two booked rows may overlap in time (blocks double booking, even under races)
+    CONSTRAINT no_overlap EXCLUDE USING gist (tstzrange(start_time, end_time) WITH &&)
+        WHERE (status = 'booked')
 );
 
 CREATE TABLE IF NOT EXISTS owners (
@@ -49,3 +52,6 @@ CREATE TABLE IF NOT EXISTS handoffs (
     status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'closed')),
     created_at TIMESTAMPTZ DEFAULT now()
 );
+
+-- at most one open handoff per customer
+CREATE UNIQUE INDEX IF NOT EXISTS one_open_handoff ON handoffs (customer_id) WHERE status = 'open';
