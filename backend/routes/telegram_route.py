@@ -1,19 +1,6 @@
-import os
 from fastapi import APIRouter, Request, Header, BackgroundTasks 
 
-from integrations.telegram_service import TelegramService
-from config.config import config
-
-
-tg_secret = config.TG_SECRET
-tg_url = config.TG_URL
-
 telegram_router = APIRouter()
-tg_service = TelegramService(
-    tg_url=tg_url
-)
-
-seen = set()
 
 @telegram_router.post("/telegram")
 async def telegram(
@@ -22,15 +9,19 @@ async def telegram(
     x_telegram_bot_api_secret_token: str = Header(None)
     ):
 
-    if x_telegram_bot_api_secret_token != tg_secret:
+    if x_telegram_bot_api_secret_token != request.app.state.tg_secret:
+        return {}
+    
+    response = await request.json()
+    if not request.app.state.redis.set(
+        name=f"dedup:{response['update_id']}",
+        value=1,
+        nx=True,
+        ex=request.app.state.tg_ttl
+    ):
         return {}
 
-    response = await request.json()
-    if response["update_id"] in seen:
-        return {}       
-    seen.add(response["update_id"])
-
-    background.add_task(tg_service.handle, response)
+    background.add_task(request.app.state.tg_service.handle, response)
     return {}
 
 
