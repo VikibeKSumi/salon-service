@@ -1,14 +1,10 @@
-from pydantic import AwareDatetime, BaseModel, ConfigDict
 from typing import Generic, TypeVar, Optional, Literal
 from datetime import date, datetime, time
+from pydantic import AwareDatetime
+
+from schemas.ioschema import InputModel, OutputModel
 
 T = TypeVar("T")
-
-class InputModel(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True, str_strip_whitespace=True)
-
-class OutputModel(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True, str_strip_whitespace=True)
 
 
 ResultCode = Literal["OK", "NOT_FOUND", "CLOSED", "SLOT_TAKEN", "INVALID_INPUT"]
