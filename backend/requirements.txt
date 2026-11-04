@@ -1,0 +1,6 @@
+redis
+psycopg
+uvicorn
+fastapi
+bccrypt
+secrets
