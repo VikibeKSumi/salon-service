@@ -2,7 +2,7 @@ from typing import Generic, TypeVar, Optional, Literal
 from datetime import date, datetime, time
 from pydantic import AwareDatetime
 
-from schemas.ioschema import InputModel, OutputModel
+from schemas.io_model_config import InputModel, OutputModel
 
 T = TypeVar("T")
 
