@@ -1,12 +1,16 @@
 
 telegram:
-  tg_url: "https://api.telegram.org/bot" # we call Telegram (sendMessage)
-  webhook_url: "https://hits-precisely-highlight-macro.trycloudflare.com/telegram" # Telegram calls us (incoming updates)
+  tg_url: https://api.telegram.org/bot # we call Telegram (sendMessage)
+  webhook_url: https://dramatically-exempt-lucas-musician.trycloudflare.com/telegram # Telegram calls us (incoming updates)
   tg_ttl: 86400 #one day
 
-db: 
-  redis_url: "redis://127.0.0.1:6379/0"
-  postgres_url: "postgresql://salon:salon@127.0.0.1:5432/salon"
+db: #local development
+  # without image
+  #redis_url: "redis://127.0.0.1:6379/0"
+  #postgres_url: "postgresql://salon:salon@127.0.0.1:5432/salon"
+  # with images
+  redis_url: "redis://host.docker.internal:6379/0"
+  postgres_url: "postgresql://salon:salon@host.docker.internal:5432/salon"
   
 auth:
   session_ttl: 604800 # one week
