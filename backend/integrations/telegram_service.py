@@ -9,7 +9,7 @@ class TelegramService():
         ):
         self.tg_url = tg_url
 
-    def tg_send(self, chat_id: int, reply_text: str) -> None:
+    def tg_send(self, chat_id: int, reply_text: str) -> None: # send response to telegram operation is done here.
         for attempt in range(3):
             try:
                 r = requests.post(
@@ -27,7 +27,7 @@ class TelegramService():
                 time.sleep(1)
 
 
-    def get_reply(self, user_id: int, text: str) -> str:
+    def get_reply(self, user_id: int, text: str) -> str: # text response to the query is created here
         return f"{user_id}: {text}"
 
 
@@ -39,8 +39,8 @@ class TelegramService():
         user_id = msg["from"]["id"] 
         chat_id = msg["chat"]["id"]
         
-        if "text" not in msg:
-            self.tg_send(chat_id, reply_text="I can only read text messages") # non text message handling
+        if "text" not in msg: # non text message handling
+            self.tg_send(chat_id, reply_text="I can only read text messages") 
             return
         text = msg["text"]
         
