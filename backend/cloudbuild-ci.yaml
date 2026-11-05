@@ -1,0 +1,21 @@
+steps:
+  - id: unit-tests
+    name: python:3.11-slim
+    entrypoint: sh
+    args:
+      - -c
+      - |
+        pip install --no-cache-dir -r backend/requirements.txt &&
+        cd backend &&
+        python -m unittest discover -s tests -v
+        
+  - id: build-image-check
+    name: gcr.io/cloud-builders/docker
+    #args: ['build', '--platform=linux/amd64',                             '-t', 'salon-service-for-ci-check:$BUILD_ID', '.']
+    args: ['build', '--platform=linux/amd64', '-f', 'backend/Dockerfile', '-t', 'salon-service-for-ci-check:$BUILD_ID', 'backend']
+
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 1200s

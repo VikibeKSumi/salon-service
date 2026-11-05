@@ -1,6 +1,9 @@
 redis
-psycopg
+psycopg[binary,pool]
 uvicorn
 fastapi
-bccrypt
-secrets
+bcrypt
+python-dotenv
+requests
+pyyaml
+tzdata
