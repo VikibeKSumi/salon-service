@@ -74,3 +74,8 @@ JOIN services s ON s.id = v.service_id;
 INSERT INTO handoffs (customer_id, status) VALUES
     (3, 'open'),
     (6, 'closed');
+    
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+INSERT INTO owners (email, password_hash)
+VALUES ('owner@salon.com', crypt('<test-password>', gen_salt('bf')));
