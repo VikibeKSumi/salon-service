@@ -5,8 +5,10 @@ steps:
     args:
       - -c
       - |
+        |
         pip install --no-cache-dir -r backend/requirements.txt &&
-        python -m unittest discover -s backend/tests -t backend -v
+        cd backend &&
+        python -m unittest discover -s tests -v
         
   - id: build-image-check
     name: gcr.io/cloud-builders/docker
