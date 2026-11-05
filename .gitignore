@@ -228,6 +228,7 @@ __marimo__/
 crash.log
 override.tf
 override_*.tf
-
+.env.prod
+.env.local
 # Local env dumps
 backend/env.txt
