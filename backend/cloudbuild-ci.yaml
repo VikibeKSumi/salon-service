@@ -7,10 +7,12 @@ steps:
       - |
         pip install --no-cache-dir -r backend/requirements.txt &&
         python -m unittest discover -s backend/tests -t backend -v
-
+        
   - id: build-image-check
     name: gcr.io/cloud-builders/docker
-    args: ['build', '--platform=linux/amd64', '-t', 'salon-service-for-ci-check:$BUILD_ID', '.']
+    #args: ['build', '--platform=linux/amd64',                             '-t', 'salon-service-for-ci-check:$BUILD_ID', '.']
+    args: ['build', '--platform=linux/amd64', '-f', 'backend/Dockerfile', '-t', 'salon-service-for-ci-check:$BUILD_ID', 'backend']
+
 
 options:
   logging: CLOUD_LOGGING_ONLY
