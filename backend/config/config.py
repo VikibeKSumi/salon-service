@@ -1,8 +1,7 @@
-import os
+import os, yaml
 from dotenv import load_dotenv
-load_dotenv()
 from pathlib import Path
-import yaml
+load_dotenv(Path(__file__).parent.parent / ".env.local")
 
 
 class SalonServiceConfiguration():
@@ -15,12 +14,12 @@ class SalonServiceConfiguration():
         # from secrets
         self.TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
         self.TG_SECRET = os.getenv("TELEGRAM_SECRET")
-        self.REDIS_URL = os.getenv("REDIS_URL", config_data["db"]["redis_url"])
-        self.POSTGRES_URL = os.getenv("POSTGRES_URL", config_data["db"]["postgres_url"])
-
+        self.REDIS_URL = os.getenv("REDIS_URL")
+        self.POSTGRES_URL = os.getenv("POSTGRES_URL")
+        self.WEBHOOK_URL = os.getenv("WEBHOOK_URL")
+        
         # from config.yaml
         self.TG_URL = config_data["telegram"]["tg_url"]+self.TELEGRAM_TOKEN
-        self.WEBHOOK_URL = config_data["telegram"]["webhook_url"]
         self.TG_TTL = config_data["telegram"]["tg_ttl"]
         self.SESSION_TTL = config_data["auth"]["session_ttl"]
         self.FRONTEND_ORIGINS = config_data["frontend"]["frontend_origin"]
