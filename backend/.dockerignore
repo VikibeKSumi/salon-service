@@ -19,3 +19,4 @@ run.py
 tests/
 README.md
 db/
+.env.local
