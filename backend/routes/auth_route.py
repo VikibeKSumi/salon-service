@@ -27,11 +27,16 @@ def login(body: LoginInput, request: Request):
 
     session_id = secrets.token_hex(16)
     request.app.state.redis.set(name=f"session_id:{session_id}", value=email, nx=True, ex=request.app.state.session_ttl)
-    return {"session_id": session_id}
+    return {
+        "status": "you have been logged in",
+        "session_id": session_id
+    }
 
 
 @auth_router.post("/logout")
 def logout(request: Request, authorization: str = Header(None)):
     session_id = (authorization or "").removeprefix("Bearer ")
     request.app.state.redis.delete(f"session_id:{session_id}")
-    return {"ok": True}
+    return {
+        "status": "you have been logged out",
+    }
