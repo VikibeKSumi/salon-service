@@ -15,9 +15,11 @@ steps:
     args:
       - build
       - --platform=linux/amd64
+      - -f
+      - backend/Dockerfile
       - -t
       - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$BUILD_ID
-      - .
+      - backend
     
   - id: push-to-artifacts-repo
     waitFor: ['build-image']
@@ -32,7 +34,7 @@ steps:
     name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
     entrypoint: bash
     args:
-      - scripts/create-release.sh
+      - backend/scripts/create-release.sh
       - $PROJECT_ID
       - ${_REGION}
       - ${_REPOSITORY}

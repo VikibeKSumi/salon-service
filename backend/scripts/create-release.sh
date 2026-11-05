@@ -22,8 +22,8 @@ image_ref="${image_tag%:*}@${digest}"
 # Upload only deployment manifests, never application files or local secrets.
 bundle_dir="$(mktemp -d)"
 mkdir -p "$bundle_dir/deploy_env"
-cp skaffold.yaml "$bundle_dir/skaffold.yaml"
-cp deploy_env/env-staging.yaml deploy_env/env-production.yaml "$bundle_dir/deploy_env/"
+cp backend/skaffold.yaml "$bundle_dir/skaffold.yaml"
+cp backend/deploy_env/env-staging.yaml backend/deploy_env/env-production.yaml "$bundle_dir/deploy_env/"
 
 # Step 2, RELEASE: Hand the pinned image + manifests to Cloud Deploy. Staging deploys from here.
 gcloud deploy releases create "release-${build_id}" \
