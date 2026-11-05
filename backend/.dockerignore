@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# secrets and local settings
+.env
+.venv/
+venv/
+.vscode/
+.idea/
+.DS_Store
+
+# git
+.git/
+.gitignore
+
+# not needed by the API at runtime
+run.py
+tests/
+README.md
+db/
