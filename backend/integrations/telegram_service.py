@@ -1,6 +1,9 @@
 
 import requests, time
 from langchain_core.messages import HumanMessage
+from langgraph.graph.state import CompiledStateGraph
+
+from capability_services.capability_services import CapabilityService
 from schemas.capability_services_schema import GetOrCreateCustomerInput, HandoffInput
 
 class TelegramService():
@@ -8,8 +11,8 @@ class TelegramService():
     def __init__(
             self,
             tg_url: str,
-            graph,
-            service,
+            graph: CompiledStateGraph,
+            service: CapabilityService,
         ):
         self.tg_url = tg_url
         self.graph = graph
@@ -33,8 +36,8 @@ class TelegramService():
                 time.sleep(1)
 
 
-    def get_reply(self, user_id: int, text: str) -> str: # text response to the query is created here
-        return f"{user_id}: {text}"
+    # def get_reply(self, user_id: int, text: str) -> str: # text response to the query is created here
+    #     return f"{user_id}: {text}"
 
 
     def handle(self, response: dict) -> None:
