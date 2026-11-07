@@ -9,11 +9,11 @@ async def telegram(
     x_telegram_bot_api_secret_token: str = Header(None)
     ):
 
-    if x_telegram_bot_api_secret_token != request.app.state.tg_secret:
+    if x_telegram_bot_api_secret_token != request.app.state.tg_secret: # reject requests not from telegram
         return {}
     
     response = await request.json()
-    if not request.app.state.redis.set(
+    if not request.app.state.redis.set(             # prevent duplicate response(a second reply and booking), if Telegram retries an update with the same update_id 
         name=f"dedup:{response['update_id']}",
         value=1,
         nx=True,
