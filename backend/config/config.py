@@ -23,5 +23,6 @@ class SalonServiceConfiguration():
         self.TG_TTL = config_data["telegram"]["tg_ttl"]
         self.SESSION_TTL = config_data["auth"]["session_ttl"]
         self.FRONTEND_ORIGINS = config_data["frontend"]["frontend_origin"]
+        self.LLM_MODEL_NAME = config_data["agent"]["llm_model_name"]
         
 config = SalonServiceConfiguration()

@@ -8,3 +8,6 @@ auth:
 
 frontend:
   frontend_origin: ""
+
+agent:
+  llm_model_name: "gpt-5.4-mini"
