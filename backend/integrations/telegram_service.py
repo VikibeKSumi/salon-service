@@ -5,6 +5,7 @@ from langgraph.graph.state import CompiledStateGraph
 
 from capability_services.capability_services import CapabilityService
 from schemas.capability_services_schema import GetOrCreateCustomerInput, HandoffInput
+import traceback
 
 class TelegramService():
 
@@ -12,11 +13,11 @@ class TelegramService():
             self,
             tg_url: str,
             graph: CompiledStateGraph,
-            service: CapabilityService,
+            capability_service: CapabilityService,
         ):
         self.tg_url = tg_url
         self.graph = graph
-        self.service = service
+        self.capability_service = capability_service
 
     def tg_send(self, chat_id: int, reply_text: str) -> None: # send response to telegram operation is done here.
         for attempt in range(3):
@@ -58,11 +59,11 @@ class TelegramService():
             "configurable": {"thread_id": str(user_id)}
         }
         try:
-            customer_info = self.service.get_or_create_customer( 
+            customer_info = self.capability_service.get_or_create_customer( 
                 request=GetOrCreateCustomerInput(telegram_id=user_id, name=first_name)
             ).payload.model_dump(mode="json")  # create a new record of customer if they does not yet exists. and get them if them.
 
-            if not self.service.is_handoff_active(
+            if not self.capability_service.is_handoff_active(
                 request=HandoffInput(telegram_id=user_id)
             ).payload:  # check if user is in conversation with a human.
                 reply_text = self.graph.invoke(
@@ -78,8 +79,8 @@ class TelegramService():
             
 
         except Exception as e:
-            reply_text = "Sorry, something went wrong with agent. Please try again"
-            print(e)
+            reply_text = "Sorry, something went wrong with agent. We're fixing it quick."
+            traceback.print_exc()
         self.tg_send(chat_id, reply_text)
         return
 
