@@ -12,6 +12,7 @@ spec:
       annotations:
         autoscaling.knative.dev/minScale: '0'
         autoscaling.knative.dev/maxScale: '2'
+        run.googleapis.com/cpu-throttling: 'false'
     spec:
       serviceAccountName: salon-staging@salon-service-11020.iam.gserviceaccount.com
       containers:
