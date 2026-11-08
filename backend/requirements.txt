@@ -6,7 +6,7 @@ psycopg==3.3.6
 psycopg_pool==3.3.3
 pydantic==2.14.3
 python-dotenv==1.2.4
-python_bcrypt==0.3.2
+bcrypt
 PyYAML==6.0.3
 redis==8.1.0
 Requests==2.34.2
