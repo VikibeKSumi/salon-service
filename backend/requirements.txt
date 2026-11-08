@@ -11,3 +11,4 @@ PyYAML==6.0.3
 redis==8.1.0
 Requests==2.34.2
 uvicorn==0.54.0
+psycopg[binary]
